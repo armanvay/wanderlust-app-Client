@@ -1,9 +1,17 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
-import { FaRegUser } from "react-icons/fa";
+import { Avatar, Button, Spinner } from "@heroui/react";
 
 const Navbar = () => {
+  const { data: session, isPending } = authClient.useSession();
+
+
+  const handleLogout =  async() => {
+    await authClient.signOut();
+  };
+
   return (
     <nav className="border-b shadow-sm">
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
@@ -20,7 +28,7 @@ const Navbar = () => {
             Destinations
           </Link>
 
-          <Link href="/bookings" className="hover:text-sky-500">
+          <Link href="/mybooking" className="hover:text-sky-500">
             My Bookings
           </Link>
 
@@ -36,21 +44,37 @@ const Navbar = () => {
 
         {/* Right Menu */}
         <div className="flex items-center gap-6 text-[15px] font-medium">
-          <Link
-            href="/profile"
-            className="flex items-center gap-2 hover:text-sky-500"
-          >
-            <FaRegUser />
-            Profile
-          </Link>
+          {isPending ? (
+            <Spinner size="sm" />
+          ) : session?.user ? (
+            <>
+              <Avatar>
+                <Avatar.Image
+                
+                  alt={session?.user.name}
+                  src={session?.user.image}
+                />
+                <Avatar.Fallback>{session?.user.name}</Avatar.Fallback>
+              </Avatar>
+              <Button
+                variant="danger"
+                size="sm"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link href="/singin" className="hover:text-sky-500">
+                <Button>Login</Button>
+              </Link>
 
-          <Link href="/login" className="hover:text-sky-500">
-            Login
-          </Link>
-
-          <Link href="/signup" className="hover:text-sky-500">
-            Sign Up
-          </Link>
+              <Link href="/singup" className="hover:text-sky-500">
+                <Button variant="secondary">Sign Up</Button>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

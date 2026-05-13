@@ -13,6 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import EditModal from "@/component/EditModal";
 import Deleted from "@/component/DeletedAlet";
+import BookingCard from "@/component/BookingCard";
 
 const DestinationsDeteals = async ({ params }) => {
   const { id } = await params;
@@ -83,42 +84,7 @@ const DestinationsDeteals = async ({ params }) => {
           </div>
 
           {/* Right Sidebar - Booking Card */}
-          <div className="lg:col-span-1">
-            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-6">
-              <p className="text-gray-500 text-sm">Starting from</p>
-              <div className="flex items-baseline gap-1 mb-1">
-                <span className="text-3xl font-bold text-cyan-500">
-                  ${data.price}
-                </span>
-                <span className="text-gray-400 text-sm">per person</span>
-              </div>
-
-              <div className="my-6">
-                <div className="bg-gray-50 p-3 rounded-lg border border-gray-200 text-gray-700">
-                  {data.departureDate}
-                </div>
-              </div>
-
-              <button className="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all mb-6">
-                Book Now <ArrowRight size={20} />
-              </button>
-
-              <ul className="space-y-3">
-                <li className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle2 size={16} className="text-green-500" /> Free
-                  cancellation up to 7 days
-                </li>
-                <li className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle2 size={16} className="text-green-500" /> Travel
-                  insurance included
-                </li>
-                <li className="flex items-center gap-2 text-sm text-gray-600">
-                  <CheckCircle2 size={16} className="text-green-500" /> 24/7
-                  customer support
-                </li>
-              </ul>
-            </div>
-          </div>
+          <BookingCard data={data}></BookingCard>
         </div>
       </div>
     </div>
